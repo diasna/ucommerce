@@ -1,0 +1,32 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.melvitech.shop</groupId>
+	<artifactId>shop</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.version>3.2.9.RELEASE</spring.version>
+		<spring.security.version>3.2.5.RELEASE</spring.security.version>
+		<hibernate.version>4.3.6.Final</hibernate.version>
+		<javax.validation.version>1.1.0.Final</javax.validation.version>
+		<hibernate.validator.version>5.0.1.Final</hibernate.validator.version>
+		<spring.data.version>1.6.4.RELEASE</spring.data.version>
+		<javassist.version>3.18.1-GA</javassist.version>
+		<mysql.connector.version>5.1.6</mysql.connector.version>
+		<tomcat.dbcp.version>7.0.52</tomcat.dbcp.version>
+		<postgresql.version>9.3-1100-jdbc4</postgresql.version>
+		<commons.beanutils.version>1.6</commons.beanutils.version>
+		<thymeleaf.version>2.0.18</thymeleaf.version>
+		<slf4j.version>1.7.5</slf4j.version>
+		<javax.servlet.version>3.0.1</javax.servlet.version>
+	</properties>
+
+	<modules>
+		<module>persistence</module>
+		<module>customer-web</module>
+		<module>tenant-web</module>
+	</modules>
+</project>
