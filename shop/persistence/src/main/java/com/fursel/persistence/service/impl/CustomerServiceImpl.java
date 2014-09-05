@@ -1,4 +1,4 @@
-package com.fursel.persistence.service;
+package com.fursel.persistence.service.impl;
 
 import javax.annotation.Resource;
 
@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fursel.persistence.Customer;
 import com.fursel.persistence.repository.CustomerRepository;
+import com.fursel.persistence.service.CustomerService;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {

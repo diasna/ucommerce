@@ -1,4 +1,4 @@
-package com.fursel.persistence.service;
+package com.fursel.persistence.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,9 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.fursel.persistence.Customer;
 import com.fursel.persistence.repository.CustomerRepository;
+import com.fursel.persistence.security.Assembler;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class CustomerDetailsServiceImpl implements UserDetailsService {
 	
 	@Autowired
 	private CustomerRepository dao;
@@ -22,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	    Customer userEntity = dao.findByEmail(username);
 	    if (userEntity == null)
 	      throw new UsernameNotFoundException("user not found");
-	    return assembler.buildUserFromUserEntity(userEntity);
+	    return assembler.buildCustomerUser(userEntity);
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.fursel.store.config;
+package com.fursel.tenant.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.fursel.persistence.service.impl.CustomerDetailsServiceImpl;
+import com.fursel.persistence.service.impl.TenantUserDetailsServiceImpl;
 
 @EnableWebSecurity
 @Configuration
@@ -21,7 +21,7 @@ import com.fursel.persistence.service.impl.CustomerDetailsServiceImpl;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
-	private CustomerDetailsServiceImpl userDetailsService;
+	private TenantUserDetailsServiceImpl userDetailsService;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 				.formLogin()
 				.loginPage("/login")
+				.successHandler(new FurselAuthenticationSuccessHandler())
 				.permitAll();
 	}
 
