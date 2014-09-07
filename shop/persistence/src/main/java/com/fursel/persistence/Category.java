@@ -10,21 +10,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="sp_customer")
-public class Customer {
+@Table(name="sp_category")
+public class Category {
 	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
 	
 	@Column
-	private String email;
+	private String name;
 	
 	@Column
-	private String password;
-	
-	@Column
-	private boolean active;
+	private String description;
 
 	@ManyToOne()
 	@JoinColumn(name="tenant_id")
@@ -38,28 +35,20 @@ public class Customer {
 		this.id = id;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getName() {
+		return name;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Tenant getTenant() {

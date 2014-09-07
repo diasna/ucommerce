@@ -7,11 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="sp_item")
-public class Item {
+@Table(name="sp_product")
+public class Product {
 	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -29,6 +31,10 @@ public class Item {
 	@Column
 	private String image;
 
+	@ManyToOne()
+	@JoinColumn(name="category_id")
+	private Category category;
+	
 	public long getId() {
 		return id;
 	}
@@ -67,6 +73,14 @@ public class Item {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 	
 }

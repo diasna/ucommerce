@@ -19,14 +19,16 @@
 		<tomcat.dbcp.version>7.0.52</tomcat.dbcp.version>
 		<postgresql.version>9.3-1100-jdbc4</postgresql.version>
 		<commons.beanutils.version>1.6</commons.beanutils.version>
-		<thymeleaf.version>2.0.18</thymeleaf.version>
+		<thymeleaf.version>2.1.3.RELEASE</thymeleaf.version>
 		<slf4j.version>1.7.5</slf4j.version>
 		<javax.servlet.version>3.0.1</javax.servlet.version>
 	</properties>
 
 	<modules>
 		<module>persistence</module>
-		<module>customer-web</module>
+		
 		<module>tenant-web</module>
+		<module>store-web</module>
+		<module>util</module>
 	</modules>
 </project>

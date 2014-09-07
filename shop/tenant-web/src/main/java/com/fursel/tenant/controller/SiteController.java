@@ -19,7 +19,8 @@ import com.fursel.tenant.domain.RegisterTenant;
 @Controller
 @RequestMapping("/")
 public class SiteController {
-private static final Logger LOG = LoggerFactory.getLogger(SiteController.class);
+	
+	private static final Logger LOG = LoggerFactory.getLogger(SiteController.class);
 
 	@Autowired
 	private TenantUserService tenantUserService;
@@ -27,7 +28,7 @@ private static final Logger LOG = LoggerFactory.getLogger(SiteController.class);
 	@RequestMapping(method = RequestMethod.GET)
 	public String landing(@RequestHeader(value="Host") String host) {
 		LOG.info("Host: {}", host);
-		return "/home";
+		return "/landing";
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.GET)

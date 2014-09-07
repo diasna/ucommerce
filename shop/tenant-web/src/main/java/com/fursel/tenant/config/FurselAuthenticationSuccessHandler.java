@@ -27,8 +27,11 @@ public class FurselAuthenticationSuccessHandler implements AuthenticationSuccess
 			throws IOException, ServletException {
 		TenantUserDetails userDetails = (TenantUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String storeName = userDetails.getStoreName();
-		LOG.info("Loading store :{} ", storeName);
-        redirectStrategy.sendRedirect(req, res, "http://"+storeName+".pinter.com/admin");
+		String userName = userDetails.getUsername();
+		String role = userDetails.getAuthorities().toString();
+		
+		LOG.info("Sign in User {} in {} with role {}", userName, storeName, role);
+        redirectStrategy.sendRedirect(req, res, "http://"+storeName+".fursel.com/admin/home");
 	}
 
 	public void setRedirectStrategy(RedirectStrategy redirectStrategy) {

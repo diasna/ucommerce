@@ -44,7 +44,7 @@ public class Assembler {
 		boolean accountNonLocked = tenantUser.isActive();
 
 		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority("USER"));
+		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
 		TenantUserDetails user = new TenantUserDetails(username, password, storeName , enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 		return user;
