@@ -21,6 +21,14 @@ public class Tenant {
 	@Column(name="domain_id")
 	private String domainId;
 	
+	public Tenant() {
+		
+	}
+	
+	public Tenant(long tenantId) {
+		this.id = tenantId;
+	}
+
 	public long getId() {
 		return id;
 	}

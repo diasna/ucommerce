@@ -38,6 +38,7 @@ public class Assembler {
 		String username = tenantUser.getEmail();
 		String password = tenantUser.getPassword();
 		String storeName = tenantUser.getTenant().getName();
+		long tenantId = tenantUser.getTenant().getId();
 		boolean enabled = tenantUser.isActive();
 		boolean accountNonExpired = tenantUser.isActive();
 		boolean credentialsNonExpired = tenantUser.isActive();
@@ -46,7 +47,7 @@ public class Assembler {
 		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
-		TenantUserDetails user = new TenantUserDetails(username, password, storeName , enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+		TenantUserDetails user = new TenantUserDetails(username, password, storeName , tenantId, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 		return user;
 	}
 }

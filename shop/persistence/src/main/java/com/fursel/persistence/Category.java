@@ -1,5 +1,6 @@
 package com.fursel.persistence;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ public class Category {
 	@Column
 	private String description;
 
-	@ManyToOne()
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="tenant_id")
 	private Tenant tenant;
 	

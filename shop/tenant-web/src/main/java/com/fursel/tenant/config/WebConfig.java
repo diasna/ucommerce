@@ -1,12 +1,16 @@
 package com.fursel.tenant.config;
 
+import java.util.List;
+
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.Ordered;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.util.StringUtils;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -19,6 +23,8 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.thymeleaf.spring3.SpringTemplateEngine;
 import org.thymeleaf.spring3.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+
+import com.fursel.tenant.domain.PageWrapper;
 
 @Configuration
 @EnableWebMvc
@@ -95,4 +101,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
 	}
 
+	@Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+		PageableHandlerMethodArgumentResolver resolver = new PageableHandlerMethodArgumentResolver();
+	    resolver.setPageParameterName("page.page");
+	    resolver.setSizeParameterName("page.size");
+	    resolver.setMaxPageSize(PageWrapper.MAX_PAGE_ITEM_DISPLAY);
+	    resolver.setOneIndexedParameters(true);
+	    argumentResolvers.add(resolver);
+	    super.addArgumentResolvers(argumentResolvers);
+    }
 }
