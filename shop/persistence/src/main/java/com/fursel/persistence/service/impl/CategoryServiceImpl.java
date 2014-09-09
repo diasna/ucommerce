@@ -32,4 +32,10 @@ public class CategoryServiceImpl implements CategoryService {
 		return repository.findCategories(keywords, pageable);
 	}
 
+	@Override
+	@Transactional(readOnly = false)
+	public void deleteCategory(long id) {
+		repository.delete(id);
+	}
+
 }

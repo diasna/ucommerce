@@ -11,4 +11,6 @@ public interface CategoryService {
 	
 	public Page<Category> getCategories(Pageable pageable, String keywords);
 	
+	public void deleteCategory(long id);
+	
 }

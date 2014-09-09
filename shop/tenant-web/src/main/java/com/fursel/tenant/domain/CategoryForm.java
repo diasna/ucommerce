@@ -8,6 +8,8 @@ import com.fursel.persistence.Category;
 
 public class CategoryForm {
 
+	private Long id;
+	
 	@NotNull
 	@NotEmpty
 	private String name;
@@ -22,6 +24,14 @@ public class CategoryForm {
 
 	public CategoryForm(String name, String description, String tenant) {
 
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {
