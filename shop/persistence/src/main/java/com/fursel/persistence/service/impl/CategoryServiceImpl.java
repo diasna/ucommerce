@@ -28,8 +28,8 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public Page<Category> getCategories(Pageable pageable, String name, String description) {
-		return repository.findCategories(pageable, name, description);
+	public Page<Category> getCategories(Pageable pageable, String keywords) {
+		return repository.findCategories(keywords, pageable);
 	}
 
 }

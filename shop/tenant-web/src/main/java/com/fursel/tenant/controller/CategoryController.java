@@ -12,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fursel.persistence.Category;
@@ -30,8 +29,9 @@ public class CategoryController {
 	private CategoryService categoryService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String landing(Model uiModel, Pageable pageable, @RequestParam("name") String name, @RequestParam("desc") String description) {
-		PageWrapper<Category> page = new PageWrapper<Category> (categoryService.getCategories(pageable, name, description), "/categories");
+	public String landing(Model uiModel, Pageable pageable, @ModelAttribute("category") CategoryForm category) {
+		LOG.info("GOT PARAM: "+category.getName());
+		PageWrapper<Category> page = new PageWrapper<Category> (categoryService.getCategories(pageable, category.getQuery()), "/categories");
 		uiModel.addAttribute("page", page);
 		return "/category";
 	}
@@ -46,7 +46,7 @@ public class CategoryController {
 		return "redirect:/categories";
 	}
 	
-	@ModelAttribute("categories")
+	@ModelAttribute("category")
 	private CategoryForm getCategory() {
 		return new CategoryForm();
 	}

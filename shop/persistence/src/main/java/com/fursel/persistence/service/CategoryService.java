@@ -9,6 +9,6 @@ public interface CategoryService {
 	
 	public boolean addCategory(Category category);
 	
-	public Page<Category> getCategories(Pageable pageable, String name, String description);
+	public Page<Category> getCategories(Pageable pageable, String keywords);
 	
 }

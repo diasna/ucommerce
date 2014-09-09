@@ -14,6 +14,8 @@ public class CategoryForm {
 
 	private String description;
 	
+	private String query = "";
+	
 	public CategoryForm() {
 
 	}
@@ -36,6 +38,14 @@ public class CategoryForm {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getQuery() {
+		return query;
+	}
+
+	public void setQuery(String query) {
+		this.query = query;
 	}
 
 	public Category toEntity() {
