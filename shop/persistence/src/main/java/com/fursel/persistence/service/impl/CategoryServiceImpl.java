@@ -1,5 +1,7 @@
 package com.fursel.persistence.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +17,9 @@ import com.fursel.persistence.service.CategoryService;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
-
+	
+	private static final Logger LOG = LoggerFactory.getLogger(CategoryServiceImpl.class);
+	
 	@Autowired
 	private CategoryRepository repository;
 
@@ -29,7 +33,9 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public Page<Category> getCategories(Pageable pageable, String keywords) {
-		return repository.findCategories(keywords, pageable);
+		TenantUserDetails userDetails = (TenantUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		LOG.info("LOADING DATA FOR :"+userDetails.getTenantId());
+		return repository.findCategories(keywords, userDetails.getTenantId(), pageable);
 	}
 
 	@Override
