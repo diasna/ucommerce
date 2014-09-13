@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import com.fursel.persistence.security.TenantUserDetails;
 
@@ -31,7 +32,7 @@ public class FurselAuthenticationSuccessHandler implements AuthenticationSuccess
 		String role = userDetails.getAuthorities().toString();
 		
 		LOG.info("Sign in User {} in {} with role {}", userName, storeName, role);
-        redirectStrategy.sendRedirect(req, res, "http://"+storeName+".fursel.com/admin/home");
+        redirectStrategy.sendRedirect(req, res, "http://"+storeName+".fursel.com/admin/home;jsessionid="+RequestContextHolder.currentRequestAttributes().getSessionId());
 	}
 
 	public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
