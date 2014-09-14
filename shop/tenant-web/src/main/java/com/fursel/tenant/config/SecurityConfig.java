@@ -1,5 +1,7 @@
 package com.fursel.tenant.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +21,8 @@ import com.fursel.persistence.service.impl.TenantUserDetailsServiceImpl;
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(SecurityConfig.class);
 	
 	@Autowired
 	private TenantUserDetailsServiceImpl userDetailsService;
@@ -60,4 +64,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
+	
 }
