@@ -16,32 +16,33 @@ import org.apache.commons.beanutils.PropertyUtils;
  * @since 1.0.0
  */
 public class FieldMatchValidator implements
-		ConstraintValidator<FieldMatch, Object> {
-	private String firstFieldName;
-	private String secondFieldName;
-	private FieldMatchType type;
-	private String errorMessage;
+        ConstraintValidator<FieldMatch, Object> {
 
-	@Override
-	public void initialize(final FieldMatch constraintAnnotation) {
-		firstFieldName = constraintAnnotation.first();
-		secondFieldName = constraintAnnotation.second();
-		type = constraintAnnotation.type();
-		errorMessage = constraintAnnotation.message();
-	}
+    private String firstFieldName;
+    private String secondFieldName;
+    private FieldMatchType type;
+    private String errorMessage;
 
-	@Override
-	public boolean isValid(final Object value, final ConstraintValidatorContext context) {
-		try {
-			final Object firstObj = PropertyUtils.getProperty(value, firstFieldName);
-			final Object secondObj = PropertyUtils.getProperty(value, secondFieldName);
-			boolean valid = type.isValid(firstObj, secondObj);
-			if (!valid) {
+    @Override
+    public void initialize(final FieldMatch constraintAnnotation) {
+        firstFieldName = constraintAnnotation.first();
+        secondFieldName = constraintAnnotation.second();
+        type = constraintAnnotation.type();
+        errorMessage = constraintAnnotation.message();
+    }
+
+    @Override
+    public boolean isValid(final Object value, final ConstraintValidatorContext context) {
+        try {
+            final Object firstObj = PropertyUtils.getProperty(value, firstFieldName);
+            final Object secondObj = PropertyUtils.getProperty(value, secondFieldName);
+            boolean valid = type.isValid(firstObj, secondObj);
+            if (!valid) {
                 context.buildConstraintViolationWithTemplate(errorMessage).addPropertyNode(secondFieldName).addConstraintViolation();
             }
-			return valid;
-		} catch (final Exception ignore) {
-			return false;
-		}
-	}
+            return valid;
+        } catch (final Exception ignore) {
+            return false;
+        }
+    }
 }

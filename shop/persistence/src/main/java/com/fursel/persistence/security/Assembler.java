@@ -15,39 +15,39 @@ import com.fursel.persistence.TenantUser;
 @Service("assembler")
 public class Assembler {
 
-	@Transactional(readOnly = true)
-	public User buildCustomerUser(Customer userEntity) {
+    @Transactional(readOnly = true)
+    public User buildCustomerUser(Customer userEntity) {
 
-		String username = userEntity.getEmail();
-		String password = userEntity.getPassword();
-		boolean enabled = userEntity.isActive();
-		boolean accountNonExpired = userEntity.isActive();
-		boolean credentialsNonExpired = userEntity.isActive();
-		boolean accountNonLocked = userEntity.isActive();
+        String username = userEntity.getEmail();
+        String password = userEntity.getPassword();
+        boolean enabled = userEntity.isActive();
+        boolean accountNonExpired = userEntity.isActive();
+        boolean credentialsNonExpired = userEntity.isActive();
+        boolean accountNonLocked = userEntity.isActive();
 
-		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority("USER"));
+        Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority("USER"));
 
-		User user = new User(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-		return user;
-	}
-	
-	@Transactional(readOnly = true)
-	public TenantUserDetails buildTenantUser(TenantUser tenantUser) {
+        User user = new User(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+        return user;
+    }
 
-		String username = tenantUser.getEmail();
-		String password = tenantUser.getPassword();
-		String storeName = tenantUser.getTenant().getName();
-		long tenantId = tenantUser.getTenant().getId();
-		boolean enabled = tenantUser.isActive();
-		boolean accountNonExpired = tenantUser.isActive();
-		boolean credentialsNonExpired = tenantUser.isActive();
-		boolean accountNonLocked = tenantUser.isActive();
+    @Transactional(readOnly = true)
+    public TenantUserDetails buildTenantUser(TenantUser tenantUser) {
 
-		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        String username = tenantUser.getEmail();
+        String password = tenantUser.getPassword();
+        String storeName = tenantUser.getTenant().getName();
+        long tenantId = tenantUser.getTenant().getId();
+        boolean enabled = tenantUser.isActive();
+        boolean accountNonExpired = tenantUser.isActive();
+        boolean credentialsNonExpired = tenantUser.isActive();
+        boolean accountNonLocked = tenantUser.isActive();
 
-		TenantUserDetails user = new TenantUserDetails(username, password, storeName , tenantId, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-		return user;
-	}
+        Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+
+        TenantUserDetails user = new TenantUserDetails(username, password, storeName, tenantId, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+        return user;
+    }
 }

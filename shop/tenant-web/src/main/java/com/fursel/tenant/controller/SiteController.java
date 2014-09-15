@@ -19,35 +19,34 @@ import com.fursel.tenant.domain.RegisterTenant;
 @Controller
 @RequestMapping("/")
 public class SiteController {
-	
-	private static final Logger LOG = LoggerFactory.getLogger(SiteController.class);
 
-	@Autowired
-	private TenantUserService tenantUserService;
+    private static final Logger LOG = LoggerFactory.getLogger(SiteController.class);
+    @Autowired
+    private TenantUserService tenantUserService;
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String landing(@RequestHeader(value="Host") String host) {
-		LOG.info("Host: {}", host);
-		return "/landing";
-	}
-	
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String register(){
-		return "/register";
-	}
-	
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(@Valid @ModelAttribute("tenant") RegisterTenant registerTenant, BindingResult result, RedirectAttributes redirectAttrs){
-		if (result.hasErrors()) {
-			return "/register";
-		}
-		tenantUserService.registerTenant(registerTenant.toEntity());
-		redirectAttrs.addFlashAttribute("message", "Success Register !");
-		return "redirect:/login";
-	}
-	
-	@ModelAttribute("tenant")
-	private RegisterTenant getTenant() {
-		return new RegisterTenant();
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    public String landing(@RequestHeader(value = "Host") String host) {
+        LOG.info("Host: {}", host);
+        return "/landing";
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public String register() {
+        return "/register";
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String register(@Valid @ModelAttribute("tenant") RegisterTenant registerTenant, BindingResult result, RedirectAttributes redirectAttrs) {
+        if (result.hasErrors()) {
+            return "/register";
+        }
+        tenantUserService.registerTenant(registerTenant.toEntity());
+        redirectAttrs.addFlashAttribute("message", "Success Register !");
+        return "redirect:/login";
+    }
+
+    @ModelAttribute("tenant")
+    private RegisterTenant getTenant() {
+        return new RegisterTenant();
+    }
 }

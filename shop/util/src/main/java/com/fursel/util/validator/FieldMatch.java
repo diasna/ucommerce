@@ -14,37 +14,38 @@ import javax.validation.Payload;
  * of fields and their matching confirmation fields can be supplied.
  *
  * Example, compare 1 pair of fields:
- * 
- * @FieldMatch(first = "password", second = "confirmPassword", message =
- *                   "The password fields must match")
  *
- *                   Example, compare more than 1 pair of fields:
+ * @FieldMatch(first = "password", second = "confirmPassword", message = "The
+ * password fields must match")
+ *
+ * Example, compare more than 1 pair of fields:
  * @FieldMatchList({
- * @FieldMatch(first = "password", second = "confirmPassword", message =
- *                   "The password fields must match"),
- * @FieldMatch(first = "email", second = "confirmEmail", message =
- *                   "The email fields must match")})
+ * @FieldMatch(first = "password", second = "confirmPassword", message = "The
+ * password fields must match"),
+ * @FieldMatch(first = "email", second = "confirmEmail", message = "The email
+ * fields must match")})
  */
-@Target({ TYPE, ANNOTATION_TYPE })
+@Target({TYPE, ANNOTATION_TYPE})
 @Retention(RUNTIME)
 @Constraint(validatedBy = FieldMatchValidator.class)
 @Documented
 public @interface FieldMatch {
-	String message() default "{constraints.fieldmatch}";
 
-	Class<?>[] groups() default {};
+    String message() default "{constraints.fieldmatch}";
 
-	Class<? extends Payload>[] payload() default {};
+    Class<?>[] groups() default {};
 
-	/**
-	 * @return The first field
-	 */
-	String first();
+    Class<? extends Payload>[] payload() default {};
 
-	/**
-	 * @return The second field
-	 */
-	String second();
+    /**
+     * @return The first field
+     */
+    String first();
 
-	FieldMatchType type() default FieldMatchType.EQUAL;
+    /**
+     * @return The second field
+     */
+    String second();
+
+    FieldMatchType type() default FieldMatchType.EQUAL;
 }

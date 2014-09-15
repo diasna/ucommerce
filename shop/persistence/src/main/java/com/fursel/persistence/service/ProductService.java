@@ -6,11 +6,10 @@ import org.springframework.data.domain.Pageable;
 import com.fursel.persistence.Product;
 
 public interface ProductService {
-	
-	public boolean addProduct(Product product);
 
-	public Page<Product> getProdcuts(Pageable pageable, String keywords);
+    public boolean addProduct(Product product);
 
-	public void deleteProduct(long id);
-	
+    public Page<Product> getProducts(Pageable pageable, String keywords);
+
+    public void deleteProduct(long id);
 }

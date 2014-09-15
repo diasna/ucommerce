@@ -23,57 +23,58 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource({ "classpath:persistence.properties" })
-@EnableJpaRepositories({ "com.fursel.persistence" })
-@ComponentScan({ "com.fursel.persistence" })
+@PropertySource({"classpath:persistence.properties"})
+@EnableJpaRepositories({"com.fursel.persistence"})
+@ComponentScan({"com.fursel.persistence"})
 public class PersistenceConfig {
 
-	@Autowired
-	private Environment env;
+    @Autowired
+    private Environment env;
 
-	@Bean
-	public DataSource dataSource() {
-		BasicDataSource dataSource = new BasicDataSource();
-		dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
-		dataSource.setUrl(env.getProperty("jdbc.url"));
-		dataSource.setUsername(env.getProperty("jdbc.user"));
-		dataSource.setPassword(env.getProperty("jdbc.pass"));
-		return dataSource;
-	}
-	
-	@Bean
+    @Bean
+    public DataSource dataSource() {
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
+        dataSource.setUrl(env.getProperty("jdbc.url"));
+        dataSource.setUsername(env.getProperty("jdbc.user"));
+        dataSource.setPassword(env.getProperty("jdbc.pass"));
+        return dataSource;
+    }
+
+    @Bean
     public PlatformTransactionManager transactionManager() {
         EntityManagerFactory factory = entityManagerFactory();
         return new JpaTransactionManager(factory);
     }
 
-	@Bean
-	public EntityManagerFactory entityManagerFactory() {
-		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-		factory.setJpaVendorAdapter(vendorAdapter);
-		factory.setJpaProperties(hibernateProperties());
-		factory.setPackagesToScan("com.fursel.persistence");
-		factory.setDataSource(dataSource());
-		factory.afterPropertiesSet();
-		factory.setLoadTimeWeaver(new InstrumentationLoadTimeWeaver());
-		return factory.getObject();
-	}
+    @Bean
+    public EntityManagerFactory entityManagerFactory() {
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+        factory.setJpaVendorAdapter(vendorAdapter);
+        factory.setJpaProperties(hibernateProperties());
+        factory.setPackagesToScan("com.fursel.persistence");
+        factory.setDataSource(dataSource());
+        factory.afterPropertiesSet();
+        factory.setLoadTimeWeaver(new InstrumentationLoadTimeWeaver());
+        return factory.getObject();
+    }
 
-	@Bean
-	public HibernateExceptionTranslator hibernateExceptionTranslator() {
-		return new HibernateExceptionTranslator();
-	}
+    @Bean
+    public HibernateExceptionTranslator hibernateExceptionTranslator() {
+        return new HibernateExceptionTranslator();
+    }
 
-	Properties hibernateProperties() {
-		return new Properties() {
-			private static final long serialVersionUID = 1714841817142187932L;
-			{
-				setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
-				setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
-				setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
-				setProperty("hibernate.globally_quoted_identifiers", "true");
-			}
-		};
-	}
+    Properties hibernateProperties() {
+        return new Properties() {
+            private static final long serialVersionUID = 1714841817142187932L;
+
+            {
+                setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
+                setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
+                setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+                setProperty("hibernate.globally_quoted_identifiers", "true");
+            }
+        };
+    }
 }

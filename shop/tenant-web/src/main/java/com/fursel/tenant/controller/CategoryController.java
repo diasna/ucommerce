@@ -22,41 +22,40 @@ import com.fursel.tenant.domain.PageWrapper;
 @Controller
 @RequestMapping("/categories")
 public class CategoryController {
-	
-	private static final Logger LOG = LoggerFactory.getLogger(CategoryController.class);
-	
-	@Autowired
-	private CategoryService categoryService;
-	
-	@RequestMapping(method = RequestMethod.GET)
-	public String landing(Model uiModel, Pageable pageable, @ModelAttribute("category") CategoryForm category) {
-		PageWrapper<Category> page = new PageWrapper<Category> (categoryService.getCategories(pageable, category.getQuery()), "/categories");
-		uiModel.addAttribute("page", page);
-		return "/category";
-	}
-	
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String add(@Valid @ModelAttribute("category") CategoryForm category, BindingResult result, RedirectAttributes redirectAttrs){
-		if (result.hasErrors()) {
-			return "redirect:/categories";
-		}
-		categoryService.addCategory(category.toEntity());
-		redirectAttrs.addFlashAttribute("message", "Category Created !");
-		return "redirect:/categories";
-	}
-	
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String delete(@ModelAttribute("category") CategoryForm category, BindingResult result, RedirectAttributes redirectAttrs){
-		if (result.hasErrors()) {
-			return "redirect:/categories";
-		}
-		categoryService.deleteCategory(category.getId());
-		redirectAttrs.addFlashAttribute("message", "Category Deleted !");
-		return "redirect:/categories";
-	}
-	
-	@ModelAttribute("category")
-	private CategoryForm getCategory() {
-		return new CategoryForm();
-	}
+
+    private static final Logger LOG = LoggerFactory.getLogger(CategoryController.class);
+    @Autowired
+    private CategoryService categoryService;
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String landing(Model uiModel, Pageable pageable, @ModelAttribute("category") CategoryForm category) {
+        PageWrapper<Category> page = new PageWrapper<Category>(categoryService.getCategories(pageable, category.getQuery()), "/categories");
+        uiModel.addAttribute("page", page);
+        return "/category";
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public String add(@Valid @ModelAttribute("category") CategoryForm category, BindingResult result, RedirectAttributes redirectAttrs) {
+        if (result.hasErrors()) {
+            return "redirect:/categories";
+        }
+        categoryService.addCategory(category.toEntity());
+        redirectAttrs.addFlashAttribute("message", "Category Created !");
+        return "redirect:/categories";
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String delete(@ModelAttribute("category") CategoryForm category, BindingResult result, RedirectAttributes redirectAttrs) {
+        if (result.hasErrors()) {
+            return "redirect:/categories";
+        }
+        categoryService.deleteCategory(category.getId());
+        redirectAttrs.addFlashAttribute("message", "Category Deleted !");
+        return "redirect:/categories";
+    }
+
+    @ModelAttribute("category")
+    private CategoryForm getCategory() {
+        return new CategoryForm();
+    }
 }

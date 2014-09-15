@@ -12,17 +12,17 @@ import com.fursel.persistence.security.Assembler;
 
 @Service
 public class TenantUserDetailsServiceImpl implements UserDetailsService {
-	
-	@Autowired
-	private TenantUserRepository dao;
-	
-	@Autowired
-	private Assembler assembler;
 
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-	    TenantUser userEntity = dao.findByEmail(username);
-	    if (userEntity == null)
-	      throw new UsernameNotFoundException("user not found");
-	    return assembler.buildTenantUser(userEntity);
-	}
+    @Autowired
+    private TenantUserRepository dao;
+    @Autowired
+    private Assembler assembler;
+
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        TenantUser userEntity = dao.findByEmail(username);
+        if (userEntity == null) {
+            throw new UsernameNotFoundException("user not found");
+        }
+        return assembler.buildTenantUser(userEntity);
+    }
 }

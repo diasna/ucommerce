@@ -1,24 +1,36 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.fursel.tenant.domain;
 
+import com.fursel.persistence.Category;
+import com.fursel.persistence.Product;
 import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fursel.persistence.Category;
-
-public class CategoryForm {
+/**
+ *
+ * @author Dias Nurul Arifin <dias@nsiapay.net>
+ */
+public class ProductForm {
 
     private Long id;
     @NotNull
     @NotEmpty
     private String name;
     private String description;
+    @NotNull
+    private Long category;
     private String query = "";
 
-    public CategoryForm() {
+    public ProductForm() {
     }
 
-    public CategoryForm(String name, String description, String tenant) {
+    public ProductForm(Long id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
     }
 
     public Long getId() {
@@ -53,10 +65,19 @@ public class CategoryForm {
         this.query = query;
     }
 
-    public Category toEntity() {
-        Category category = new Category();
-        category.setName(this.getName());
-        category.setDescription(this.getDescription());
+    public Long getCategory() {
         return category;
+    }
+
+    public void setCategory(Long category) {
+        this.category = category;
+    }
+
+    public Product toEntity() {
+        Product product = new Product();
+        product.setName(this.getName());
+        product.setDescription(this.getDescription());
+        product.setCategory(new Category(this.getCategory()));
+        return product;
     }
 }

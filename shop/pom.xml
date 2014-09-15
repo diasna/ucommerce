@@ -25,10 +25,9 @@
 	</properties>
 
 	<modules>
+                <module>util</module>
 		<module>persistence</module>
-		
 		<module>tenant-web</module>
 		<module>store-web</module>
-		<module>util</module>
 	</modules>
 </project>

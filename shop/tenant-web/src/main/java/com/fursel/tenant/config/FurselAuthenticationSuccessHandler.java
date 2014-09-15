@@ -17,26 +17,26 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import com.fursel.persistence.security.TenantUserDetails;
 
 public class FurselAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-	
-	private static final Logger LOG = LoggerFactory.getLogger(FurselAuthenticationSuccessHandler.class);
-	
-	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-	
-	@Override
-	public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse res, Authentication auth) 
-			throws IOException, ServletException {
-		TenantUserDetails userDetails = (TenantUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String storeName = userDetails.getStoreName();
-		String userName = userDetails.getUsername();
-		String role = userDetails.getAuthorities().toString();
-		
-		LOG.info("Sign in User {} in {} with role {}", userName, storeName, role);
-        redirectStrategy.sendRedirect(req, res, "http://"+storeName+".fursel.com/admin/home");
-	}
 
-	public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
+    private static final Logger LOG = LoggerFactory.getLogger(FurselAuthenticationSuccessHandler.class);
+    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse res, Authentication auth)
+            throws IOException, ServletException {
+        TenantUserDetails userDetails = (TenantUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String storeName = userDetails.getStoreName();
+        String userName = userDetails.getUsername();
+        String role = userDetails.getAuthorities().toString();
+
+        LOG.info("Sign in User {} in {} with role {}", userName, storeName, role);
+        redirectStrategy.sendRedirect(req, res, "http://" + storeName + ".fursel.com/admin/home");
+    }
+
+    public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
         this.redirectStrategy = redirectStrategy;
     }
+
     protected RedirectStrategy getRedirectStrategy() {
         return redirectStrategy;
     }

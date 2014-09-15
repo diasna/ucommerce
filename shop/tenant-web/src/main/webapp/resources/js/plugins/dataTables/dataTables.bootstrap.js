@@ -51,31 +51,31 @@ if ($.fn.dataTable.Api) {
                         case 'first':
                             btnDisplay = lang.sFirst;
                             btnClass = button + (page > 0 ?
-                                '' : ' disabled');
+                                    '' : ' disabled');
                             break;
 
                         case 'previous':
                             btnDisplay = lang.sPrevious;
                             btnClass = button + (page > 0 ?
-                                '' : ' disabled');
+                                    '' : ' disabled');
                             break;
 
                         case 'next':
                             btnDisplay = lang.sNext;
                             btnClass = button + (page < pages - 1 ?
-                                '' : ' disabled');
+                                    '' : ' disabled');
                             break;
 
                         case 'last':
                             btnDisplay = lang.sLast;
                             btnClass = button + (page < pages - 1 ?
-                                '' : ' disabled');
+                                    '' : ' disabled');
                             break;
 
                         default:
                             btnDisplay = button + 1;
                             btnClass = page === button ?
-                                'active' : '';
+                                    'active' : '';
                             break;
                     }
 
@@ -86,27 +86,27 @@ if ($.fn.dataTable.Api) {
                             'tabindex': settings.iTabIndex,
                             'id': idx === 0 && typeof button === 'string' ? settings.sTableId + '_' + button : null
                         })
-                            .append($('<a>', {
-                                    'href': '#'
-                                })
+                                .append($('<a>', {
+                            'href': '#'
+                        })
                                 .html(btnDisplay)
-                        )
-                            .appendTo(container);
+                                )
+                                .appendTo(container);
 
                         settings.oApi._fnBindAction(
-                            node, {
-                                action: button
-                            }, clickHandler
-                        );
+                                node, {
+                            action: button
+                        }, clickHandler
+                                );
                     }
                 }
             }
         };
 
         attach(
-            $(host).empty().html('<ul class="pagination"/>').children('ul'),
-            buttons
-        );
+                $(host).empty().html('<ul class="pagination"/>').children('ul'),
+                buttons
+                );
     }
 } else {
     // Integration for 1.9-
@@ -138,11 +138,11 @@ if ($.fn.dataTable.Api) {
                 };
 
                 $(nPaging).append(
-                    '<ul class="pagination">' +
-                    '<li class="prev disabled"><a href="#">&larr; ' + oLang.sPrevious + '</a></li>' +
-                    '<li class="next disabled"><a href="#">' + oLang.sNext + ' &rarr; </a></li>' +
-                    '</ul>'
-                );
+                        '<ul class="pagination">' +
+                        '<li class="prev disabled"><a href="#">&larr; ' + oLang.sPrevious + '</a></li>' +
+                        '<li class="next disabled"><a href="#">' + oLang.sNext + ' &rarr; </a></li>' +
+                        '</ul>'
+                        );
                 var els = $('a', nPaging);
                 $(els[0]).bind('click.DT', {
                     action: "previous"
@@ -151,7 +151,6 @@ if ($.fn.dataTable.Api) {
                     action: "next"
                 }, fnClickHandler);
             },
-
             "fnUpdate": function(oSettings, fnDraw) {
                 var iListLength = 5;
                 var oPaging = oSettings.oInstance.fnPagingInfo();
@@ -180,12 +179,12 @@ if ($.fn.dataTable.Api) {
                     for (j = iStart; j <= iEnd; j++) {
                         sClass = (j == oPaging.iPage + 1) ? 'class="active"' : '';
                         $('<li ' + sClass + '><a href="#">' + j + '</a></li>')
-                            .insertBefore($('li:last', an[i])[0])
-                            .bind('click', function(e) {
-                                e.preventDefault();
-                                oSettings._iDisplayStart = (parseInt($('a', this).text(), 10) - 1) * oPaging.iLength;
-                                fnDraw(oSettings);
-                            });
+                                .insertBefore($('li:last', an[i])[0])
+                                .bind('click', function(e) {
+                            e.preventDefault();
+                            oSettings._iDisplayStart = (parseInt($('a', this).text(), 10) - 1) * oPaging.iLength;
+                            fnDraw(oSettings);
+                        });
                     }
 
                     // Add / remove disabled classes from the static elements

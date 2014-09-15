@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/home")
 public class HomeController {
-	private static final Logger LOG = LoggerFactory.getLogger(HomeController.class);
-	
-	@RequestMapping(method = RequestMethod.GET)
-	public String landing(@RequestHeader(value="Host") String host) {
-		LOG.info("Host: {}", host);
-		return "/home";
-	}
-	
+
+    private static final Logger LOG = LoggerFactory.getLogger(HomeController.class);
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String landing(@RequestHeader(value = "Host") String host) {
+        LOG.info("Host: {}", host);
+        return "/home";
+    }
 }

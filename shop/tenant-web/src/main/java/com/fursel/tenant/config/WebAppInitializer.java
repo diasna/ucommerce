@@ -11,33 +11,32 @@ import com.fursel.persistence.config.PersistenceConfig;
 @Order(2)
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-	// {!begin addToRootContext}
-	@Override
-	protected Class<?>[] getRootConfigClasses() {
-		return new Class<?>[] { 
-				SecurityConfig.class, 
-				PersistenceConfig.class, 
-				CoreConfig.class 
-				};
-	}
-	// {!end addToRootContext}
+    // {!begin addToRootContext}
+    @Override
+    protected Class<?>[] getRootConfigClasses() {
+        return new Class<?>[]{
+            SecurityConfig.class,
+            PersistenceConfig.class,
+            CoreConfig.class
+        };
+    }
+    // {!end addToRootContext}
 
-	@Override
-	protected Class<?>[] getServletConfigClasses() {
-		return new Class<?>[] { WebConfig.class };
-	}
+    @Override
+    protected Class<?>[] getServletConfigClasses() {
+        return new Class<?>[]{WebConfig.class};
+    }
 
-	@Override
-	protected String[] getServletMappings() {
-		return new String[] { "/" };
-	}
+    @Override
+    protected String[] getServletMappings() {
+        return new String[]{"/"};
+    }
 
-	@Override
-	protected Filter[] getServletFilters() {
+    @Override
+    protected Filter[] getServletFilters() {
 
-		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-		characterEncodingFilter.setEncoding("UTF-8");
-		return new Filter[] { characterEncodingFilter };
-	}
-
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        return new Filter[]{characterEncodingFilter};
+    }
 }

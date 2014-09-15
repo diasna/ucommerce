@@ -8,13 +8,15 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * Defines several <code>@FieldMatch</code> annotations on the same element
+ * Defines several
+ * <code>@FieldMatch</code> annotations on the same element
  *
  * @see FieldMatch
  */
-@Target({ TYPE, ANNOTATION_TYPE })
+@Target({TYPE, ANNOTATION_TYPE})
 @Retention(RUNTIME)
 @Documented
 public @interface FieldMatchList {
-	FieldMatch[] value();
+
+    FieldMatch[] value();
 }

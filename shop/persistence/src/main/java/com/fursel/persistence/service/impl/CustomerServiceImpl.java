@@ -14,22 +14,20 @@ import com.fursel.persistence.service.CustomerService;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-	@Resource
-	private CustomerRepository repository;
-	
-	@Autowired 
-	private PasswordEncoder encoder;
-	
-	@Transactional
-	public Customer findByEmail(String email) {
-		return repository.findByEmail(email);
-	}
+    @Resource
+    private CustomerRepository repository;
+    @Autowired
+    private PasswordEncoder encoder;
 
-	@Override
-	@Transactional(readOnly = false)
-	public boolean registerCustomer(Customer customer) {
-		customer.setPassword(encoder.encode(customer.getPassword()));
-		return repository.save(customer) != null? true : false;
-	}
+    @Transactional
+    public Customer findByEmail(String email) {
+        return repository.findByEmail(email);
+    }
 
+    @Override
+    @Transactional(readOnly = false)
+    public boolean registerCustomer(Customer customer) {
+        customer.setPassword(encoder.encode(customer.getPassword()));
+        return repository.save(customer) != null ? true : false;
+    }
 }

@@ -14,27 +14,24 @@ import com.fursel.persistence.service.TenantUserService;
 
 @Service
 public class TenantUserServiceImpl implements TenantUserService {
-	
-	@Resource
-	private TenantUserRepository repository;
-	
-	@Resource
-	private TenantRepository tenantRepository;
-	
-	@Autowired 
-	private PasswordEncoder encoder;
-	
-	@Override
-	public TenantUser findByEmail(String email) {
-		return repository.findByEmail(email);
-	}
 
-	@Override
-	@Transactional(readOnly = false)
-	public boolean registerTenant(TenantUser tenant) {
-		tenant.setPassword(encoder.encode(tenant.getPassword()));
-		tenantRepository.save(tenant.getTenant());
-		return repository.save(tenant) != null? true : false;
-	}
+    @Resource
+    private TenantUserRepository repository;
+    @Resource
+    private TenantRepository tenantRepository;
+    @Autowired
+    private PasswordEncoder encoder;
 
+    @Override
+    public TenantUser findByEmail(String email) {
+        return repository.findByEmail(email);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public boolean registerTenant(TenantUser tenant) {
+        tenant.setPassword(encoder.encode(tenant.getPassword()));
+        tenantRepository.save(tenant.getTenant());
+        return repository.save(tenant) != null ? true : false;
+    }
 }
