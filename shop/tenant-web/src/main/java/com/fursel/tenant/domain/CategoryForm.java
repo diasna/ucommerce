@@ -13,6 +13,7 @@ public class CategoryForm {
     @NotEmpty
     private String name;
     private String description;
+    private Long parentId;
     private String query = "";
 
     public CategoryForm() {
@@ -53,10 +54,19 @@ public class CategoryForm {
         this.query = query;
     }
 
-    public Category toEntity() {
+    public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
+
+	public Category toEntity() {
         Category category = new Category();
         category.setName(this.getName());
         category.setDescription(this.getDescription());
+        category.setParent(new Category(this.parentId));
         return category;
     }
 }
