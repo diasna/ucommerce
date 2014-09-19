@@ -55,14 +55,14 @@ public class CategoryForm {
     }
 
     public Long getParentId() {
-		return parentId;
-	}
+        return parentId;
+    }
 
-	public void setParentId(Long parentId) {
-		this.parentId = parentId;
-	}
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
 
-	public Category toEntity() {
+    public Category toEntity() {
         Category category = new Category();
         category.setName(this.getName());
         category.setDescription(this.getDescription());

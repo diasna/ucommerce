@@ -20,25 +20,25 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    
+
     @Column
     private String name;
-    
+
     @Column
     private String description;
-    
+
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "tenant_id")
     private Tenant tenant;
-    
+
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "parent_id")
     private Category parent;
-    
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "parent_id")
-    private Set<Category> child; 
-    
+    private Set<Category> child;
+
     public Category() {
     }
 
@@ -78,20 +78,20 @@ public class Category {
         this.tenant = tenant;
     }
 
-	public Category getParent() {
-		return parent;
-	}
+    public Category getParent() {
+        return parent;
+    }
 
-	public void setParent(Category parent) {
-		this.parent = parent;
-	}
+    public void setParent(Category parent) {
+        this.parent = parent;
+    }
 
-	public Set<Category> getChild() {
-		return child;
-	}
+    public Set<Category> getChild() {
+        return child;
+    }
 
-	public void setChild(Set<Category> child) {
-		this.child = child;
-	}
-    
+    public void setChild(Set<Category> child) {
+        this.child = child;
+    }
+
 }

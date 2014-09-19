@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -21,13 +20,14 @@ import com.fursel.tenant.domain.RegisterTenant;
 public class SiteController {
 
     private static final Logger LOG = LoggerFactory.getLogger(SiteController.class);
+    
     @Autowired
     private TenantUserService tenantUserService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String landing(@RequestHeader(value = "Host") String host) {
-        LOG.info("Host: {}", host);
-        return "/landing";
+    public String landing() {
+//        return "/landing";
+        return "redirect:/home";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -48,5 +48,10 @@ public class SiteController {
     @ModelAttribute("tenant")
     private RegisterTenant getTenant() {
         return new RegisterTenant();
+    }
+    
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String test() {
+        return "/index";
     }
 }
