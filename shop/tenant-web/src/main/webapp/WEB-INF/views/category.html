@@ -38,7 +38,9 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    
+    <!--JSTree-->
+    <link th:href="@{/resources/js/tree/themes/default/style.min.css}" rel="stylesheet" type="text/css"/>
 </head>
 
 <body>
@@ -453,15 +455,17 @@
                                     <p class="help-block">Example block-level help text here.</p>
                                 </div>
                                 <div class="form-group">
-                                    <label>Parent Category</label>
+                                    <label>Parent</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" readonly="readonly"/>
+<!--                                        <input type="text" class="form-control" readonly="readonly"/>
                                         <span class="input-group-btn">
                                             <button class="btn btn-default" type="button"><i class="fa fa-book"></i></button>
-                                        </span>
+                                        </span>-->
+                                        <div id="jstree">
+
+                                        </div>
                                     </div>
                                     <input type="hidden" th:field="*{parentId}" id="parentId"/>
-                                    <p class="help-block">Example block-level help text here.</p>
                                 </div>
                             </div>
                         </div>
@@ -522,6 +526,10 @@
 
     <!-- Custom Theme JavaScript -->
     <script th:src="@{/resources/js/sb-admin-2.js}"></script>
+    
+    <!--JSTree-->
+    <script th:src="@{/resources/js/tree/jstree.min.js}"></script>
+    
     <script type="text/javascript">
         $("#categories").last().addClass("active");
         $("#catalog").last().addClass("active");
@@ -529,6 +537,17 @@
             $("#category").html($(this).attr("ng-val"));
             $("#ng-id-submit").attr("value", $(this).attr("ng-id"));
             $("#modal-delete").modal('toggle');
+        });
+        $(function () {
+            $('#jstree').jstree();
+            $('#jstree').on("changed.jstree", function (e, data) {
+                console.log(data.selected);
+            });
+            $('button').on('click', function () {
+                $('#jstree').jstree(true).select_node('child_node_1');
+                $('#jstree').jstree('select_node', 'child_node_1');
+                $.jstree.reference('#jstree').select_node('child_node_1');
+            });
         });
     </script>
 </body>

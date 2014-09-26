@@ -25,12 +25,14 @@ import org.thymeleaf.spring3.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import com.fursel.tenant.domain.PageWrapper;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"com.fursel.tenant.controller",})
 public class WebConfig extends WebMvcConfigurerAdapter {
-
+    
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
@@ -111,4 +113,5 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         argumentResolvers.add(resolver);
         super.addArgumentResolvers(argumentResolvers);
     }
+
 }

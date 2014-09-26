@@ -18,6 +18,8 @@ import com.fursel.persistence.Category;
 import com.fursel.persistence.service.CategoryService;
 import com.fursel.tenant.domain.CategoryForm;
 import com.fursel.tenant.domain.PageWrapper;
+import java.util.List;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/categories")
@@ -54,6 +56,11 @@ public class CategoryController {
         return "redirect:/categories";
     }
 
+    @RequestMapping(value ="/list", method=RequestMethod.GET, produces = {"application/json"})   
+    public @ResponseBody List<Category> getCategories(){
+        return categoryService.getAllByTenant();
+    }
+    
     @ModelAttribute("category")
     private CategoryForm getCategory() {
         return new CategoryForm();

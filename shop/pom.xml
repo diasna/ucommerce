@@ -22,6 +22,7 @@
 		<thymeleaf.version>2.1.3.RELEASE</thymeleaf.version>
 		<slf4j.version>1.7.5</slf4j.version>
 		<javax.servlet.version>3.0.1</javax.servlet.version>
+                <jackson.version>1.9.10</jackson.version>
 	</properties>
 
 	<modules>
