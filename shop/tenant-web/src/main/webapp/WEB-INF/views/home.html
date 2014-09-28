@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
     <head th:replace="common/head">
         <title></title>
@@ -8,7 +9,7 @@
         <div id="wrapper">
 
             <!-- Navigation -->
-            <nav th:replace="common/nav-top"></nav>
+            <nav th:replace="common/navigation"></nav>
 
             <div id="page-wrapper">
                 <div class="row">
@@ -557,6 +558,7 @@
         <!-- /#wrapper -->
 
         <nav th:replace="common/footer"></nav>
+        
         <script type="text/javascript">
             $("#dashboard").last().addClass("active");
         </script>
