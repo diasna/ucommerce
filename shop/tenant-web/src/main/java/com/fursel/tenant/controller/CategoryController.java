@@ -1,5 +1,7 @@
 package com.fursel.tenant.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -12,14 +14,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fursel.persistence.Category;
+import com.fursel.persistence.json.CategoryJson;
 import com.fursel.persistence.service.CategoryService;
 import com.fursel.tenant.domain.CategoryForm;
 import com.fursel.tenant.domain.PageWrapper;
-import java.util.List;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/categories")
@@ -57,7 +59,7 @@ public class CategoryController {
     }
 
     @RequestMapping(value ="/list", method=RequestMethod.GET, produces = {"application/json"})   
-    public @ResponseBody List<Category> getCategories(){
+    public @ResponseBody List<CategoryJson> getCategories(){
         return categoryService.getAllByTenant();
     }
     

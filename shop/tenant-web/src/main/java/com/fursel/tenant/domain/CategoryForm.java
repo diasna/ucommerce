@@ -66,7 +66,9 @@ public class CategoryForm {
         Category category = new Category();
         category.setName(this.getName());
         category.setDescription(this.getDescription());
-        category.setParent(new Category(this.parentId));
+		if (this.getParentId() != null) {
+        	category.setParent(new Category(this.getParentId()));
+        }
         return category;
     }
 }

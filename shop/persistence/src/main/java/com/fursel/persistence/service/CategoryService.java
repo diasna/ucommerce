@@ -1,10 +1,12 @@
 package com.fursel.persistence.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.fursel.persistence.Category;
-import java.util.List;
+import com.fursel.persistence.json.CategoryJson;
 
 public interface CategoryService {
 
@@ -12,7 +14,7 @@ public interface CategoryService {
 
     public Page<Category> getCategories(Pageable pageable, String keywords);
 
-    public List<Category> getAllByTenant();
+    public List<CategoryJson> getAllByTenant();
 
     public void deleteCategory(long id);
 }

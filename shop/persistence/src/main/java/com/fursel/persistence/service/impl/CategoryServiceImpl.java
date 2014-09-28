@@ -1,5 +1,14 @@
 package com.fursel.persistence.service.impl;
 
+import java.util.List;
+
+import javax.persistence.EntityManagerFactory;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,18 +20,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fursel.persistence.Category;
 import com.fursel.persistence.Tenant;
+import com.fursel.persistence.json.CategoryJson;
 import com.fursel.persistence.repository.CategoryRepository;
 import com.fursel.persistence.security.TenantUserDetails;
 import com.fursel.persistence.service.CategoryService;
-import java.util.List;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
     private static final Logger LOG = LoggerFactory.getLogger(CategoryServiceImpl.class);
+    
     @Autowired
     private CategoryRepository repository;
-
+    
+    @Autowired
+    private EntityManagerFactory factory;
+    
     @Override
     @Transactional(readOnly = false)
     public boolean addCategory(Category category) {
@@ -44,8 +57,16 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> getAllByTenant() {
+    public List<CategoryJson> getAllByTenant() {
         TenantUserDetails userDetails = (TenantUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return repository.getAllByTenant(userDetails.getTenantId());
+        Session session = factory.createEntityManager().unwrap(Session.class);
+        Criteria cr = session.createCriteria(Category.class)
+        		.add(Restrictions.eq("tenant.id", userDetails.getTenantId()))
+        	    .setProjection(Projections.projectionList()
+        	      .add(Projections.property("id"), "id")
+        	      .add(Projections.property("parent.id"), "parent")
+        	      .add(Projections.property("name"), "name"))
+        	    .setResultTransformer(Transformers.aliasToBean(CategoryJson.class));
+        return cr.list();
     }
 }

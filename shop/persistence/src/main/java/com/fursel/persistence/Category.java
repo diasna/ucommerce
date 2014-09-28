@@ -13,7 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 @Entity
 @Table(name = "sp_category")
@@ -24,9 +26,11 @@ public class Category {
     private long id;
 
     @Column
+    @JsonProperty("text")
     private String name;
 
     @Column
+    @JsonIgnore(true)
     private String description;
 
     @ManyToOne(cascade = CascadeType.MERGE)

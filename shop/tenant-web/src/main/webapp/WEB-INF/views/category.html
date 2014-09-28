@@ -352,7 +352,7 @@
                                     </form>
                                 </div>
                                 <div class="col-md-9">
-                                    <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false"><i class="fa fa-plus"></i> Add Category</button>
+                                    <button id="trg-create-category" type="button" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add Category</button>
                                 </div>
                             </div>
                         </div>
@@ -538,17 +538,32 @@
             $("#ng-id-submit").attr("value", $(this).attr("ng-id"));
             $("#modal-delete").modal('toggle');
         });
-        $(function () {
-            $('#jstree').jstree();
-            $('#jstree').on("changed.jstree", function (e, data) {
-                console.log(data.selected);
+        $("#trg-create-category").click(function(){
+        	$.ajax({
+                async : true,
+                type : "GET",
+                url : $(location).attr('href')+"/list",
+                dataType : "json",    
+
+                success : function(json) {
+                    createJSTrees(json);
+                },    
+
+                error : function(xhr, ajaxOptions, thrownError) {
+                    console.log("error loading data");
+                }
             });
-            $('button').on('click', function () {
-                $('#jstree').jstree(true).select_node('child_node_1');
-                $('#jstree').jstree('select_node', 'child_node_1');
-                $.jstree.reference('#jstree').select_node('child_node_1');
-            });
+        	$("#myModal").modal('toggle');
         });
+        function createJSTrees(jsonData) {
+        	$('#jstree')
+       			.jstree({ 'core' : {
+        	    	'data' : jsonData
+        		}
+	       	  	}).on('changed.jstree', function (e, data) {
+	   				$("#parentId").val(data.instance.get_node(data.selected[0]).id);
+	    	  	});
+    	}
     </script>
 </body>
 
