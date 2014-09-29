@@ -108,7 +108,7 @@
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form role="form" th:object="${product}" th:action="@{/products/add}" method="post">
+                    <form role="form" th:object="${product}" th:action="@{/products/add}" method="post" enctype="multipart/form-data">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                             <h4 class="modal-title" id="myModalLabel">Add Product</h4>
@@ -116,8 +116,8 @@
                         <div class="modal-body">
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs">
-                                <li class="active"><a href="#general" data-toggle="tab">General</a>
-                                </li>
+                                <li class="active"><a href="#general" data-toggle="tab">General</a></li>
+                                <li><a href="#images" data-toggle="tab">Images</a></li>
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
@@ -134,43 +134,64 @@
                                         <p class="help-block">Example block-level help text here.</p>
                                     </div>
                                     <div class="form-group">
-	                                    <label>Retail Price</label>
-	                                    <div class="input-group">
-										    <span class="input-group-addon">Rp.</span>
-										    <input type="text" class="form-control" value="0"/>
-										    <span class="input-group-addon">,00</span>
-										</div>
+                                        <label>Retail Price</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Rp.</span>
+                                            <input type="text" class="form-control" value="0" th:field="*{retailPrice}"/>
+                                            <span class="input-group-addon">,00</span>
+                                        </div>
                                     </div>
                                     <div class="form-group">
-	                                    <label>Wholeshale Price</label>
-	                                    <div class="input-group">
-										    <span class="input-group-addon">Rp.</span>
-										    <input type="text" class="form-control" value="0"/>
-										    <span class="input-group-addon">,00</span>
-										</div>
+                                        <label>Wholeshale Price</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Rp.</span>
+                                            <input type="text" class="form-control" value="0" th:field="*{wholeshalePrice}"/>
+                                            <span class="input-group-addon">,00</span>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Quantity</label>
-                                        <input class="form-control"/>
+                                        <input class="form-control" type="text" value="0" th:field="*{quantity}"/>
                                         <p class="help-block">Example block-level help text here.</p>
                                     </div>
                                     <div class="form-group">
                                         <label>Condition</label>
-                                        <select class="selectpicker">
-										    <option>New</option>
-										    <option>Used</option>
-										    <option>Refurbished</option>
-									    </select>
+                                        <select class="selectpicker form-control" th:field="*{condition}">
+                                            <option th:each="condition : ${T(com.fursel.util.enums.ProductCondition).values()}" th:value="${condition}" th:text="${condition}" th:selected="${condition == T(com.fursel.util.enums.ProductCondition).NEW}"></option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
-	                                    <label>Category</label>
-	                                    <div class="input-group">
-	                                        <div id="jstree">
-	
-	                                        </div>
-	                                    </div>
-	                                    <input type="hidden" th:field="*{category}" id="category"/>
-	                                </div>
+                                        <label>Category</label>
+                                        <div class="input-group">
+                                            <div id="jstree">
+
+                                            </div>
+                                        </div>
+                                        <input type="hidden" th:field="*{category}" id="category"/>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="images">
+                                    <br/>
+                                    <div class="form-group">
+                                        <label>Image 1</label>
+                                        <input class="form-control" name="images[0]" type="file"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Image 2</label>
+                                        <input class="form-control" name="images[1]" type="file"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Image 3</label>
+                                        <input class="form-control" name="images[2]" type="file"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Image 4</label>
+                                        <input class="form-control" name="images[3]" type="file"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Image 5</label>
+                                        <input class="form-control" name="images[4]" type="file"/>
+                                    </div>
                                 </div>
                             </div>
                             <!-- /.panel-body -->
@@ -206,43 +227,41 @@
             </div>
         </div>
 
-
         <nav th:replace="common/footer"></nav>
+
         <script type="text/javascript">
             $("#products").last().addClass("active");
             $("#catalog").last().addClass("active");
             $(".selectpicker").selectpicker();
-            $(".delete").click(function() {
+            $(".delete").click(function () {
                 $("#product").html($(this).attr("ng-val"));
                 $("#ng-id-submit").attr("value", $(this).attr("ng-id"));
                 $("#modal-delete").modal('toggle')
             });
-            $("#trg-create-product").click(function(){
-	        	$.ajax({
-	                async : true,
-	                type : "GET",
-	                url : "raw/categories",
-	                dataType : "json",    
-	
-	                success : function(json) {
-	                    createJSTrees(json);
-	                },    
-	
-	                error : function(xhr, ajaxOptions, thrownError) {
-	                    console.log("error loading data");
-	                }
-	            });
-	        	$("#myModal").modal('toggle');
-	        });
-	        function createJSTrees(jsonData) {
-	        	$('#jstree')
-	       			.jstree({ 'core' : {
-	        	    	'data' : jsonData
-	        		}
-		       	  	}).on('changed.jstree', function (e, data) {
-		   				$("#category").val(data.instance.get_node(data.selected[0]).id);
-		    	  	});
-	    	}
+            $("#trg-create-product").click(function () {
+                $.ajax({
+                    async: true,
+                    type: "GET",
+                    url: "raw/categories",
+                    dataType: "json",
+                    success: function (json) {
+                        createJSTrees(json);
+                },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log("error loading data");
+                    }
+                });
+                $("#myModal").modal('toggle');
+            });
+            function createJSTrees(jsonData) {
+                $('#jstree')
+                        .jstree({'core': {
+                                'data': jsonData
+                            }
+                        }).on('changed.jstree', function (e, data) {
+                    $("#category").val(data.instance.get_node(data.selected[0]).id);
+                });
+            }
         </script>
     </body>
 </html>

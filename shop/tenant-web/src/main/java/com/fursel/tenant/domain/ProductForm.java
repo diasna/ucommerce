@@ -6,8 +6,14 @@ package com.fursel.tenant.domain;
 
 import com.fursel.persistence.Category;
 import com.fursel.persistence.Product;
+import com.fursel.util.enums.ProductCondition;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 /**
  *
@@ -16,14 +22,28 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class ProductForm {
 
     private Long id;
+    
     @NotNull
     @NotEmpty
     private String name;
+    
     private String description;
+    
     @NotNull
     private Long category;
+    
     private String query = "";
-
+    
+    private BigDecimal retailPrice;
+    
+    private BigDecimal wholeshalePrice;
+    
+    private int quantity = 0;
+    
+    private ProductCondition condition;
+    
+    private List<MultipartFile> images = new ArrayList<MultipartFile>();
+    
     public ProductForm() {
     }
 
@@ -73,11 +93,55 @@ public class ProductForm {
         this.category = category;
     }
 
+    public BigDecimal getRetailPrice() {
+        return retailPrice;
+    }
+
+    public void setRetailPrice(BigDecimal retailPrice) {
+        this.retailPrice = retailPrice;
+    }
+
+    public BigDecimal getWholeshalePrice() {
+        return wholeshalePrice;
+    }
+
+    public void setWholeshalePrice(BigDecimal wholeshalePrice) {
+        this.wholeshalePrice = wholeshalePrice;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public ProductCondition getCondition() {
+        return condition;
+    }
+
+    public void setCondition(ProductCondition condition) {
+        this.condition = condition;
+    }
+
+    public List<MultipartFile> getImages() {
+        return images;
+    }
+
+    public void setImages(List<MultipartFile> images) {
+        this.images = images;
+    }
+    
     public Product toEntity() {
         Product product = new Product();
         product.setName(this.getName());
         product.setDescription(this.getDescription());
         product.setCategory(new Category(this.getCategory()));
+        product.setRetailPrice(this.getRetailPrice());
+        product.setWholesalePrice(this.getWholeshalePrice());
+        product.setQuantity(this.getQuantity());
+        product.setCondition(this.getCondition().value());
         return product;
     }
 }
