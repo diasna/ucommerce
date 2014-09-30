@@ -30,7 +30,7 @@ public class FurselAuthenticationSuccessHandler implements AuthenticationSuccess
         String role = userDetails.getAuthorities().toString();
 
         LOG.info("Sign in User {} in {} with role {}", userName, storeName, role);
-        redirectStrategy.sendRedirect(req, res, "http://" + storeName + ".fursel.com/admin/home");
+        redirectStrategy.sendRedirect(req, res, "http://" + storeName + ".fursel.com:8085/admin/home");
     }
 
     public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
