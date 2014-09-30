@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.fursel.persistence;
 
 import javax.persistence.CascadeType;
@@ -10,23 +15,24 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ *
+ * @author Dias Nurul Arifin <dias@nsiapay.net>
+ */
 @Entity
-@Table(name = "sp_images")
-public class Images {
-
+@Table(name = "sp_cart_product")
+public class CartProduct {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
+    
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "product_id")
     private Product product;
-
+    
     @Column
-    private String systemPath;
-
-    @Column
-    private String caption;
+    private int quantity;
 
     public long getId() {
         return id;
@@ -44,20 +50,12 @@ public class Images {
         this.product = product;
     }
 
-    public String getSystemPath() {
-        return systemPath;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setSystemPath(String systemPath) {
-        this.systemPath = systemPath;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
-
-    public String getCaption() {
-        return caption;
-    }
-
-    public void setCaption(String caption) {
-        this.caption = caption;
-    }
-
+    
 }
