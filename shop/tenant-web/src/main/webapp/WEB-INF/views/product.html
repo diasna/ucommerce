@@ -17,7 +17,11 @@
                         </ol>
                     </div>
                 </div>
-                <div th:if="${message}" th:text="${message}" class="alert alert-success"></div>
+                <div th:switch="${status}"> 
+                    <div th:case="0" class="alert alert-success">Product Created</div>
+                    <div th:case="1" class="alert alert-danger">Add Product Failed</div>
+                </div>
+                
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="panel panel-default">
