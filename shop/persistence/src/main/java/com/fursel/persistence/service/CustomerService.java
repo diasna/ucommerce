@@ -4,7 +4,7 @@ import com.fursel.persistence.Customer;
 
 public interface CustomerService {
 
-    public Customer findByEmail(String email);
+    public Customer findByEmail(String email, Long tenantId);
 
     public boolean registerCustomer(Customer customer);
 }

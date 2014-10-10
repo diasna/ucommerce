@@ -15,9 +15,11 @@ public class CustomerDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private CustomerRepository dao;
+    
     @Autowired
     private Assembler assembler;
 
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Customer userEntity = dao.findByEmail(username);
         if (userEntity == null) {

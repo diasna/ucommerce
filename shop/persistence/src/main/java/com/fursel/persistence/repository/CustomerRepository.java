@@ -8,6 +8,7 @@ import com.fursel.persistence.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-    @Query("select c from Customer c where c.email = :email")
-    public Customer findByEmail(@Param("email") String email);
+    @Query("select c from Customer c where c.email = :email and c.tenant.id = :tenantId")
+    public Customer findByEmail(@Param("email") String email, @Param("tenantId") Long tenantId);
+    
 }

@@ -20,8 +20,8 @@ public class CustomerServiceImpl implements CustomerService {
     private PasswordEncoder encoder;
 
     @Transactional
-    public Customer findByEmail(String email) {
-        return repository.findByEmail(email);
+    public Customer findByEmail(String email, Long tenantId) {
+        return repository.findByEmail(email, tenantId);
     }
 
     @Override
