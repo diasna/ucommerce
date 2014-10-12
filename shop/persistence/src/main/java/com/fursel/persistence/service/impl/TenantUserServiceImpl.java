@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fursel.persistence.Tenant;
 import com.fursel.persistence.TenantUser;
 import com.fursel.persistence.repository.TenantRepository;
 import com.fursel.persistence.repository.TenantUserRepository;
@@ -17,8 +18,10 @@ public class TenantUserServiceImpl implements TenantUserService {
 
     @Resource
     private TenantUserRepository repository;
+    
     @Resource
     private TenantRepository tenantRepository;
+    
     @Autowired
     private PasswordEncoder encoder;
 
@@ -34,4 +37,14 @@ public class TenantUserServiceImpl implements TenantUserService {
         tenantRepository.save(tenant.getTenant());
         return repository.save(tenant) != null ? true : false;
     }
+
+	@Override
+	public Tenant findByDomain(String domain) {
+		return tenantRepository.findByDomain(domain);
+	}
+
+	@Override
+	public Tenant findByDomainId(String domain) {
+		return tenantRepository.findByDomainId(domain);
+	}
 }

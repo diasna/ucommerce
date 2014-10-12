@@ -9,17 +9,17 @@
                     class="icon-bar"></span> <span class="icon-bar"></span> <span
                     class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">ShoppyMe</a>
+            <a class="navbar-brand" th:href="@{/}">ShoppyMe</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" th:if="${#httpServletRequest.remoteUser != null}">
             <ul class="nav navbar-nav pull-right">
-                <li><a href="/" th:text="${#httpServletRequest.remoteUser}"></a></li>
+                <li><a th:href="@{/}" th:text="${#httpServletRequest.remoteUser}"></a></li>
             </ul>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" th:unless="${#httpServletRequest.remoteUser != null}">
             <ul class="nav navbar-nav pull-right">
-                <li><a href="/login">Login</a></li>
+                <li><a th:href="@{/login}">Login</a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->

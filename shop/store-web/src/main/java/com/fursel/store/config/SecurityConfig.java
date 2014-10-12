@@ -22,6 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private CustomerDetailsServiceImpl userDetailsService;
+    
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -44,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("USER")
+                .antMatchers("/customer/**").hasRole("USER")
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()

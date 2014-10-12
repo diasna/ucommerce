@@ -49,4 +49,11 @@ public class Tenant {
     public void setDomainId(String domainId) {
         this.domainId = domainId;
     }
+
+	@Override
+	public String toString() {
+		return "Tenant [id=" + id + ", name=" + name + ", domainId=" + domainId
+				+ "]";
+	}
+    
 }

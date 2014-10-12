@@ -28,6 +28,7 @@ public class SiteController {
 
     @Autowired
     private CustomerService customerService;
+    
     private static final Logger LOG = LoggerFactory.getLogger(SiteController.class);
 
     @RequestMapping(method = RequestMethod.GET)
@@ -43,11 +44,6 @@ public class SiteController {
         items.add(new Item("2", "Galaxy S5", new BigDecimal(25000)));
         items.add(new Item("3", "Iphone 5S", new BigDecimal(500000)));
         return items;
-    }
-
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String register() {
-        return "/register";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
