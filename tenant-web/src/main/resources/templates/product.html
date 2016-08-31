@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+    <head th:replace="common/head">
+        <title></title>
+    </head>
+    <body>
+        <div id="wrapper">
+            <!-- Navigation -->
+            <nav th:replace="common/navigation"></nav>
+            <div id="page-wrapper">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <hr/>
+                        <ol class="breadcrumb">
+                            <li><a href="#">Catalog</a></li>
+                            <li class="active">Products</li>
+                        </ol>
+                    </div>
+                </div>
+                <div th:switch="${status}"> 
+                    <div th:case="0" class="alert alert-success">Product Created</div>
+                    <div th:case="1" class="alert alert-danger">Add Product Failed</div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <form th:action="@{/products}" method="get">
+                                            <div class="input-group">
+                                                <input type="text" th:value="${product.query}" class="form-control" name="query"/> 
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                                                </span>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <button type="button" class="btn btn-primary pull-right" id="trg-create-product"><i class="fa fa-plus"></i> Add Product</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.panel-heading -->
+
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-md-1">No.</th>
+                                                <th class="col-md-3">Name</th>
+                                                <th class="col-md-5">Description</th>
+                                                <th class="col-md-3">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="odd gradeX" th:each="cat, iterStat : ${page.content}">
+                                                <td th:text="${((page.number-1)*(page.size))+iterStat.index+1}"></td>
+                                                <td th:text="${cat.name}"></td>
+                                                <td th:text="${cat.description}"></td>
+                                                <td class="center">
+                                                    <button type="button" class="btn btn-default delete" th:attr="ng-id=${cat.id},ng-val=${cat.name}">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-default">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <ul class="pagination pagination-centered">
+                                                <li th:class="${page.firstPage}? 'disabled' : ''">
+                                                    <span th:if="${page.firstPage}"><i class="fa fa-angle-double-left"></i></span>
+                                                    <a th:if="${not page.firstPage}" th:href="@{${page.url}(page.page=1,page.size=${page.size}, query=${product.query})}"><i class="fa fa-angle-double-left"></i></a>
+                                                </li>
+                                                <li th:class="${page.hasPreviousPage}? '' : 'disabled'">
+                                                    <span th:if='${not page.hasPreviousPage}'><i class="fa fa-angle-left"></i></span>
+                                                    <a th:if='${page.hasPreviousPage}' th:href='@{${page.url}(page.page=${page.number-1},page.size=${page.size}, query=${product.query})}' title='Go to previous page'><i class="fa fa-angle-left"></i></a>
+                                                </li>
+                                                <li th:each='item : ${page.items}' th:class="${item.current}? 'active' : ''">
+                                                    <span th:if='${item.current}' th:text='${item.number}'>1</span>
+                                                    <a th:if='${not item.current}' th:href='@{${page.url}(page.page=${item.number},page.size=${page.size}, query=${product.query})}'><span th:text='${item.number}'>1</span></a>
+                                                </li>
+                                                <li th:class="${page.hasNextPage}? '' : 'disabled'">
+                                                    <span th:if='${not page.hasNextPage}'><i class="fa fa-angle-right"></i></span>
+                                                    <a th:if='${page.hasNextPage}' th:href='@{${page.url}(page.page=${page.number+1},page.size=${page.size}, query=${product.query})}' title='Go to next page'><i class="fa fa-angle-right"></i></a>
+                                                </li>
+                                                <li th:class="${page.lastPage}? 'disabled' : ''">
+                                                    <span th:if='${page.lastPage}'><i class="fa fa-angle-double-right"></i></span>
+                                                    <a th:if='${not page.lastPage}' th:href='@{${page.url}(page.page=${page.totalPages},page.size=${page.size}, query=${product.query})}'><i class="fa fa-angle-double-right"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form role="form" th:object="${product}" th:action="@{/products/add}" method="post" enctype="multipart/form-data">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Add Product</h4>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#general" data-toggle="tab">General</a></li>
+                                <li><a href="#images" data-toggle="tab">Images</a></li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane fade active in" id="general">
+                                    <br/>
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input class="form-control" th:field="*{name}"/>
+                                        <p class="help-block">Example block-level help text here.</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea class="form-control" rows="3" th:field="*{description}"></textarea>
+                                        <p class="help-block">Example block-level help text here.</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Retail Price</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Rp.</span>
+                                            <input type="text" class="form-control" value="0" th:field="*{retailPrice}"/>
+                                            <span class="input-group-addon">,00</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Wholeshale Price</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Rp.</span>
+                                            <input type="text" class="form-control" value="0" th:field="*{wholeshalePrice}"/>
+                                            <span class="input-group-addon">,00</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Quantity</label>
+                                        <input class="form-control" type="text" value="0" th:field="*{quantity}"/>
+                                        <p class="help-block">Example block-level help text here.</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Condition</label>
+                                        <select class="selectpicker form-control" th:field="*{condition}">
+                                            <option th:each="condition : ${T(com.fursel.util.enums.ProductCondition).values()}" th:value="${condition}" th:text="${condition}" th:selected="${condition == T(com.fursel.util.enums.ProductCondition).NEW}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Category</label>
+                                        <div class="input-group">
+                                            <div id="jstree">
+
+                                            </div>
+                                        </div>
+                                        <input type="hidden" th:field="*{category}" id="category"/>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="images">
+                                    <br/>
+                                    <div class="form-group">
+                                        <label>Image 1</label>
+                                        <input class="filestyle" data-buttonText=" Choose    file" name="images[0]" type="file"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Image 2</label>
+                                        <input class="filestyle" data-buttonText=" Choose file" name="images[1]" type="file"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Image 3</label>
+                                        <input class="filestyle" data-buttonText=" Choose file" name="images[2]" type="file"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Image 4</label>
+                                        <input class="filestyle" data-buttonText=" Choose file" name="images[3]" type="file"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Image 5</label>
+                                        <input class="filestyle" data-buttonText=" Choose file" name="images[4]" type="file"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Delete -->
+        <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure to remove <span id="product"></span>?
+                    </div>
+                    <div class="modal-footer">
+                        <form role="form" th:object="${product}" th:action="@{/products/delete}" method="post">
+                            <input type="hidden" id="ng-id-submit" name="id"/>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav th:replace="common/footer"></nav>
+
+        <script type="text/javascript">
+            $("#products").last().addClass("active");
+            $("#catalog").last().addClass("active");
+            $(".selectpicker").selectpicker();
+            $(".delete").click(function () {
+                $("#product").html($(this).attr("ng-val"));
+                $("#ng-id-submit").attr("value", $(this).attr("ng-id"));
+                $("#modal-delete").modal('toggle')
+            });
+            $("#trg-create-product").click(function () {
+                $.ajax({
+                    async: true,
+                    type: "GET",
+                    url: "raw/categories",
+                    dataType: "json",
+                    success: function (json) {
+                        createJSTrees(json);
+                },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log("error loading data");
+                    }
+                });
+                $("#myModal").modal('toggle');
+            });
+            function createJSTrees(jsonData) {
+                $('#jstree')
+                        .jstree({'core': {
+                                'data': jsonData
+                            }
+                        }).on('changed.jstree', function (e, data) {
+                    $("#category").val(data.instance.get_node(data.selected[0]).id);
+                });
+            }
+        </script>
+    </body>
+</html>
